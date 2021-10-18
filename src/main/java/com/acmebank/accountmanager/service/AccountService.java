@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.math.BigDecimal;
+import java.time.ZonedDateTime;
 import java.util.Optional;
 
 import static com.acmebank.accountmanager.payload.TransferMoneyResponse.ErrorCode.ACCOUNT_NOT_EXISTS;
@@ -42,7 +43,9 @@ public class AccountService {
 
         BankAccount toBankAccount = toBankAccountOptional.get();
         fromBankAccount.balance = fromBankAccount.balance.subtract(balance);
+        fromBankAccount.updatedTime = ZonedDateTime.now();
         toBankAccount.balance = toBankAccount.balance.add(balance);
+        toBankAccount.updatedTime = ZonedDateTime.now();
         accountRepository.save(fromBankAccount);
         accountRepository.save(toBankAccount);
 
