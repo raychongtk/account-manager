@@ -5,18 +5,21 @@ plugins {
 }
 
 group = 'com.acmebank'
-version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '11'
+version = '1.0.0'
+sourceCompatibility = '15'
 
 repositories {
     mavenCentral()
 }
 
+def springVersion = "2.5.5"
+
 dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    implementation 'org.springframework.boot:spring-boot-starter-web'
-    runtimeOnly 'mysql:mysql-connector-java'
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    implementation "org.springframework.boot:spring-boot-starter-data-jpa:${springVersion}"
+    implementation "org.springframework.boot:spring-boot-starter-web:${springVersion}"
+    implementation "org.springframework.boot:spring-boot-starter-validation:${springVersion}"
+    runtimeOnly "com.h2database:h2"
+    testImplementation "org.springframework.boot:spring-boot-starter-test:${springVersion}"
 }
 
 test {
