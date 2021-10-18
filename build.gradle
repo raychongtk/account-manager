@@ -18,7 +18,8 @@ dependencies {
     implementation "org.springframework.boot:spring-boot-starter-data-jpa:${springVersion}"
     implementation "org.springframework.boot:spring-boot-starter-web:${springVersion}"
     implementation "org.springframework.boot:spring-boot-starter-validation:${springVersion}"
-    runtimeOnly "com.h2database:h2"
+    implementation 'junit:junit:4.13.2'
+    runtimeOnly 'com.h2database:h2:1.4.200'
     testImplementation "org.springframework.boot:spring-boot-starter-test:${springVersion}"
 }
 
