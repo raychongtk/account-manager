@@ -4,7 +4,6 @@ import com.acmebank.accountmanager.domain.BankAccount;
 import com.acmebank.accountmanager.expcetion.BadRequestException;
 import com.acmebank.accountmanager.payload.TransferMoneyResponse;
 import com.acmebank.accountmanager.repository.AccountRepository;
-import com.acmebank.accountmanager.util.BalanceCalculator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,8 +20,6 @@ import static com.acmebank.accountmanager.payload.TransferMoneyResponse.ErrorCod
  */
 @Service
 public class AccountService {
-    private final BalanceCalculator balanceCalculator = new BalanceCalculator();
-
     @Autowired
     AccountRepository accountRepository;
 
@@ -45,9 +42,9 @@ public class AccountService {
         if (!enoughBalance) return TransferMoneyResponse.failed(BALANCE_NOT_ENOUGH);
 
         BankAccount toBankAccount = toBankAccountOptional.get();
-        fromBankAccount.balance = balanceCalculator.subtract(fromBankAccount.balance, balance);
+        fromBankAccount.balance = fromBankAccount.balance.subtract(balance);
         fromBankAccount.updatedTime = ZonedDateTime.now();
-        toBankAccount.balance = balanceCalculator.add(toBankAccount.balance, balance);
+        toBankAccount.balance = toBankAccount.balance.add(balance);
         toBankAccount.updatedTime = ZonedDateTime.now();
         accountRepository.save(fromBankAccount);
         accountRepository.save(toBankAccount);
